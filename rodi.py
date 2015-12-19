@@ -82,7 +82,10 @@ class RoDI(object):
             self.BLINK_METHOD,
             [milliseconds]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def move(self, left_wheel_speed, right_wheel_speed):
         '''
@@ -92,7 +95,10 @@ class RoDI(object):
             self.MOVE_METHOD,
             [left_wheel_speed, right_wheel_speed]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def move_left(self):
         '''
@@ -135,7 +141,10 @@ class RoDI(object):
             self.SING_METHOD,
             [note, duration]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def see(self):
         '''
@@ -147,8 +156,11 @@ class RoDI(object):
             self.SEE_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def sense(self):
         '''
@@ -161,8 +173,11 @@ class RoDI(object):
             self.SENSE_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def pixel(self, red, green, blue):
         '''
@@ -174,7 +189,10 @@ class RoDI(object):
             self.PIXEL_METHOD,
             [red, green, blue]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def light(self):
         '''
@@ -186,8 +204,11 @@ class RoDI(object):
             self.LIGHT_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def led(self, state):
         '''
@@ -199,7 +220,10 @@ class RoDI(object):
             self.LED_METHOD,
             [state]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def run_test(self):
         '''
