@@ -53,6 +53,7 @@ class RoDI(object):
     PIXEL_METHOD = 6
     LIGHT_METHOD = 7
     LED_METHOD = 8
+    IMU_METHOD = 9
 
     def __init__(self, ip='192.168.4.1', port='1234'):
         '''
@@ -82,7 +83,10 @@ class RoDI(object):
             self.BLINK_METHOD,
             [milliseconds]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def move(self, left_wheel_speed, right_wheel_speed):
         '''
@@ -92,7 +96,10 @@ class RoDI(object):
             self.MOVE_METHOD,
             [left_wheel_speed, right_wheel_speed]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def move_left(self):
         '''
@@ -135,7 +142,10 @@ class RoDI(object):
             self.SING_METHOD,
             [note, duration]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def see(self):
         '''
@@ -147,8 +157,11 @@ class RoDI(object):
             self.SEE_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def sense(self):
         '''
@@ -161,8 +174,11 @@ class RoDI(object):
             self.SENSE_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def pixel(self, red, green, blue):
         '''
@@ -174,7 +190,10 @@ class RoDI(object):
             self.PIXEL_METHOD,
             [red, green, blue]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
 
     def light(self):
         '''
@@ -186,8 +205,11 @@ class RoDI(object):
             self.LIGHT_METHOD,
             []
         )
-        response = requests.get(url)
-        return json.loads(response.content)
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def led(self, state):
         '''
@@ -199,7 +221,44 @@ class RoDI(object):
             self.LED_METHOD,
             [state]
         )
-        requests.get(url)
+        try:
+            requests.get(url, timeout=1.0)
+        except requests.exceptions.ConnectTimeout:
+            pass
+
+    def imu(self):
+        '''
+        Reads the values from the IMU (MPU-6050)
+
+        Returns x, y and z accelerations, angular velocities and temperature
+        with values from -32768 to 32767 and degrees C * 10
+        '''
+        url = self._build_url(
+            self.IMU_METHOD,
+            []
+        )
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
+
+    def imu(self):
+        '''
+        Reads the values from the IMU (MPU-6050)
+
+        Returns x, y and z accelerations, angular velocities and temperature
+        with values from -32768 to 32767 and degrees C * 10
+        '''
+        url = self._build_url(
+            self.IMU_METHOD,
+            []
+        )
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def run_test(self):
         '''
