@@ -53,6 +53,7 @@ class RoDI(object):
     PIXEL_METHOD = 6
     LIGHT_METHOD = 7
     LED_METHOD = 8
+    IMU_METHOD = 9
 
     def __init__(self, ip='192.168.4.1', port='1234'):
         '''
@@ -200,6 +201,23 @@ class RoDI(object):
             [state]
         )
         requests.get(url)
+
+    def imu(self):
+        '''
+        Reads the values from the IMU (MPU-6050)
+
+        Returns x, y and z accelerations, angular velocities and temperature
+        with values from -32768 to 32767 and degrees C * 10
+        '''
+        url = self._build_url(
+            self.IMU_METHOD,
+            []
+        )
+        try:
+            response = requests.get(url, timeout=1.0)
+            return json.loads(response.content)
+        except requests.exceptions.ConnectTimeout:
+            return None
 
     def run_test(self):
         '''
