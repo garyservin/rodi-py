@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright (C) 2015 Manuel Kaufmann - humitos@gmail.com
 
 # This program is free software; you can redistribute it and/or modify
@@ -264,63 +264,63 @@ class RoDI(object):
         '''
         Method to run some tests for the robot
         '''
-        print "RoDI turn led on"
+        print("RoDI turn led on")
         self.led(1)
         time.sleep(1)
 
-        print "RoDI turn led off"
+        print("RoDI turn led off")
         self.led(0)
         time.sleep(1)
 
-        print "RoDI blink"
+        print("RoDI blink")
         self.blink(200)
         time.sleep(1)
 
-        print "RoDI move forward"
+        print("RoDI move forward")
         self.move_forward()
         time.sleep(1)
 
-        print "RoDI rotate left"
+        print("RoDI rotate left")
         self.move_left()
         time.sleep(1)
 
-        print "RoDI move forward"
+        print("RoDI move forward")
         self.move_forward()
         time.sleep(1)
 
-        print "RoDI rotate right"
+        print("RoDI rotate right")
         self.move_right()
         time.sleep(1)
 
-        print "RoDI move backward"
+        print("RoDI move backward")
         self.move_backward()
         time.sleep(1)
 
-        print "RoDI stop"
+        print("RoDI stop")
         self.move_stop()
         time.sleep(1)
 
-        print "RoDI sing"
+        print("RoDI sing")
         self.sing(33, 1000)
         time.sleep(1)
 
-        print "RoDI do a rainbow"
+        print("RoDI do a rainbow")
         for j in range(256):
             red, green, blue = wheel(j)
             self.pixel(red, green, blue)
             time.sleep(0.005)
         self.pixel(0, 0, 0)
 
-        print "RoDI see"
-        print " - I see something at %d cm" % self.see()
+        print("RoDI see")
+        print(" - I see something at %d cm" % self.see())
         time.sleep(1)
 
-        print "RoDI sense"
-        print " - My sensors sense: %s" % self.sense()
+        print("RoDI sense")
+        print(" - My sensors sense: %s" % self.sense())
         time.sleep(1)
 
-        print "RoDI see light"
-        print " - My light sensor senses: %s" % self.light()
+        print("RoDI see light")
+        print(" - My light sensor senses: %s" % self.light())
         self.blink(0)
 
 
